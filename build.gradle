@@ -28,12 +28,15 @@ allure {
 
 dependencies {
     testImplementation(
-            'org.junit.jupiter:junit-jupiter',
+            'org.junit.jupiter:junit-jupiter:5.10.2',
             'io.qameta.allure:allure-selenide:2.28.0',
             'com.codeborne:selenide:7.3.1',
     )
 }
 
-test {
-    useJUnitPlatform()
+tasks.withType(Test) {
+    systemProperties(System.getProperties())
+    useJUnitPlatform({
+        includeTags(System.getProperty("type", "regression"))
+    })
 }
